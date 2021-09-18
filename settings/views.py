@@ -17,7 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 import cgitb; cgitb.enable()
 
 pattern_now = -1
-pattern_now = -1
 my = 2
 
 
@@ -32,6 +31,7 @@ auto_on_hour_check = -1
 auto_on_min_check = -1
 auto_off_hour_check = -1
 auto_off_min_check = -1
+first_loading = 1;
 def settings(request):
 
     list_dict = {
@@ -50,7 +50,7 @@ def settings(request):
 
     context = json.dumps(list_dict)
     userinfo = User.objects.get(username=request.user.username)
-    return render(request, 'settings.html', {'context': context, 'userinfo': userinfo})
+    return render(request, 'settings.html', {'context': context, 'userinfo': userinfo, 'user_id': user_id})
 
 
 
@@ -99,6 +99,7 @@ def check_Brightness_mode(request):
         setting['Brightness_Control']['Mode'] = str(change)
         now_kst = time_now()  # 현재시간 받아옴
         setting["Time"] = {}
+
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
@@ -121,6 +122,7 @@ def check_Brightness_mode_auto_time(request):
         change = value_of_request_body(request.body)
         print(request.body)
         print(str(change))
+
         recently_file_name = list_blobs(user_id)
         createDirectory(user_id)
         DOWNLOAD("ynumcl-act", user_id + "/JSON/READALL/" + recently_file_name, user_id + "/temp")
@@ -131,7 +133,6 @@ def check_Brightness_mode_auto_time(request):
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
-
         setting["Time"]["hour"] = now_kst.strftime("%H")
         setting["Time"]["minute"] = now_kst.strftime("%M")
         setting["Time"]["second"] = now_kst.strftime("%S")
@@ -162,7 +163,6 @@ def check_Brightness_mode_auto_CDS(request):
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
-
         setting["Time"]["hour"] = now_kst.strftime("%H")
         setting["Time"]["minute"] = now_kst.strftime("%M")
         setting["Time"]["second"] = now_kst.strftime("%S")
@@ -176,16 +176,12 @@ def check_Brightness_mode_auto_CDS(request):
         return redirect('settings.html')
 
 
-first_loading = 1;
+
 
 
 @csrf_exempt
 def update_Brightness(request): # 밝기 업데이트2
     global first_loading
-    print(first_loading)
-    print(first_loading)
-    print(first_loading)
-    print(first_loading)
     if(first_loading == 1):
         print("===================첫번째 로딩===================")
         now_kst = time_now()
@@ -212,7 +208,6 @@ def update_Brightness(request): # 밝기 업데이트2
             setting["Time"]["year"] = now_kst.strftime("%Y")
             setting["Time"]["month"] = now_kst.strftime("%m")
             setting["Time"]["day"] = now_kst.strftime("%d")
-
             setting["Time"]["hour"] = now_kst.strftime("%H")
             setting["Time"]["minute"] = now_kst.strftime("%M")
             setting["Time"]["second"] = now_kst.strftime("%S")
@@ -259,7 +254,6 @@ def update_CDS_Value(request): # 밝기 업데이트2
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
-
         setting["Time"]["hour"] = now_kst.strftime("%H")
         setting["Time"]["minute"] = now_kst.strftime("%M")
         setting["Time"]["second"] = now_kst.strftime("%S")
@@ -289,7 +283,6 @@ def update_min_max(request):
     setting['Brightness_Control']['Auto_Brightness'] = {}
     setting['Brightness_Control']['Auto_Brightness']['min'] = str(change[0])
     setting['Brightness_Control']['Auto_Brightness']["max"] = str(change[1])
-
     setting['Brightness_Control']['Auto_CDS'] = {}
     setting['Brightness_Control']['Auto_CDS']["min"] = str(change[2])
     setting['Brightness_Control']['Auto_CDS']["max"] = str(change[3])
@@ -336,7 +329,6 @@ def power_mode(request):
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
-
         setting["Time"]["hour"] = now_kst.strftime("%H")
         setting["Time"]["minute"] = now_kst.strftime("%M")
         setting["Time"]["second"] = now_kst.strftime("%S")
@@ -366,7 +358,6 @@ def manual_control(request):
         setting["Time"]["year"] = now_kst.strftime("%Y")
         setting["Time"]["month"] = now_kst.strftime("%m")
         setting["Time"]["day"] = now_kst.strftime("%d")
-
         setting["Time"]["hour"] = now_kst.strftime("%H")
         setting["Time"]["minute"] = now_kst.strftime("%M")
         setting["Time"]["second"] = now_kst.strftime("%S")
@@ -389,7 +380,6 @@ def update_on_off(request):
         createDirectory(user_id)
         DOWNLOAD("ynumcl-act", user_id + "/JSON/READALL/" + recently_file_name, user_id + "/temp")
         setting = read_json()  # 임시파일에서 불러온 json
-
         setting['Power_Control']['Auto_ON'] = {}
         setting['Power_Control']['Auto_ON']['min'] = str(change[0])
         setting['Power_Control']['Auto_ON']['max'] = str(change[1])
