@@ -66,7 +66,7 @@
           <li class="user_inform">
             <ul>
               <li>ID    :{{userinfo}}</li>
-              <li>Serial:</li>
+              <li>Serial:{{user_id}}</li>
             </ul>
           </li>
         </ul>
@@ -97,7 +97,7 @@ setTimeout(function selectHref() {
 
 
 var list_context = JSON.parse("{{ context|escapejs }}");
-
+var selectHref_brightness_mode = -1
 
 
 bright_input = list_context['bright_check']
@@ -137,6 +137,61 @@ $("#Auto_Power_Off_hour").val(auto_off_hour_input);
 
 auto_off_min_input = list_context['auto_off_min_check']
 $("#Auto_Power_Off_min").val(auto_off_min_input);
+
+var brightness_property1 = document.getElementById("brightness_manual");
+var brightness_property2 = document.getElementById("brightness_auto_time");
+var brightness_property3 = document.getElementById("brightness_auto_CDS");
+selectHref_brightness_mode = list_context['brightness_mode']
+if(selectHref_brightness_mode == '0')
+{
+    brightness_property1.style.backgroundColor = "#202020"
+    count_manual = 1
+}
+if(selectHref_brightness_mode == '1')
+{
+    brightness_property2.style.backgroundColor = "#202020"
+    count_time = 1
+}
+if(selectHref_brightness_mode == '2')
+{
+    brightness_property3.style.backgroundColor = "#202020"
+    count_CDS = 1
+}
+
+var powermode_property1 = document.getElementById("powermodemanual");
+var powermode_property2 = document.getElementById("powermodeauto");
+selectHref_powermode = list_context['powermode']
+if(selectHref_powermode == '0')
+{
+    powermode_property1.style.backgroundColor = "#202020"
+   var count_powermode_manual = 1;
+
+}
+if(selectHref_powermode == '1')
+{
+    powermode_property2.style.backgroundColor = "#202020"
+    var count_powermode_auto = 1;
+}
+
+
+var manualcontrol_property1 = document.getElementById("manualcontrolon");
+var manualcontrol_property2 = document.getElementById("manualcontroloff");
+selectHref_manualcontrol = list_context['manualcontrol']
+if(selectHref_manualcontrol == '0')
+{
+    manualcontrol_property1.style.backgroundColor = "#202020"
+   var count_manual_control_on = 1;
+
+}
+if(selectHref_manualcontrol == '1')
+{
+    manualcontrol_property2.style.backgroundColor = "#202020"
+    var count_manual_control_off = 1;
+}
+
+
+
+
 }, 100);
 
 </script>
@@ -267,14 +322,85 @@ var input = "5"
             <td>
               <table style="width: 320px; margin-left: 14px;">
                 <tr>
-                  <td style="border: none;"><input type="button" id = "brightness_manual" onclick= "check_Brightness_mode_manual()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';" value="수동" class="VIDEO" /></td>
-                  <td style="border: none;"><input type="button"  onclick= "check_Brightness_mode_auto_time()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';" value="자동(시간)" class="VIDEO" /></td>
-                  <td style="border: none;"><input type="button" onclick= "check_Brightness_mode_auto_CDS()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';" value="자동(조도)" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button" id = "brightness_manual" onclick= "check_Brightness_mode_manual(); bright_auto();" value="수동" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button"   id = "brightness_auto_time" onclick= "check_Brightness_mode_auto_time(); bright_auto_time();"  value="자동(시간)" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button" id = "brightness_auto_CDS" onclick= "check_Brightness_mode_auto_CDS(); bright_auto_CDS();" value="자동(조도)" class="VIDEO" /></td>
                     <script>
+
+
+var count_manual = 0;
+var count_time = 0
+var count_CDS = 0
+
+    function bright_auto()
+    {
+        var brightness_property1 = document.getElementById("brightness_manual");
+        var brightness_property2 = document.getElementById("brightness_auto_time");
+        var brightness_property3 = document.getElementById("brightness_auto_CDS");
+        if (count_manual == 0 ){
+        count_manual = 1;
+        count_time = 0;
+        count_CDS = 0;
+        brightness_property1.style.backgroundColor = "#202020"
+        brightness_property2.style.backgroundColor = "#606060"
+        brightness_property3.style.backgroundColor = "#606060"
+                        }
+        else{
+         count_manual = 0;
+         brightness_property1.style.backgroundColor = "#606060"
+        }
+
+    }
+
+    function bright_auto_time()
+    {
+
+        var brightness_property1 = document.getElementById("brightness_manual");
+        var brightness_property2 = document.getElementById("brightness_auto_time");
+        var brightness_property3 = document.getElementById("brightness_auto_CDS");
+        if (count_time == 0 ){
+        count_manual = 0;
+        count_time = 1;
+        count_CDS = 0;
+        brightness_property1.style.backgroundColor = "#606060"
+        brightness_property2.style.backgroundColor = "#202020"
+        brightness_property3.style.backgroundColor = "#606060"
+                        }
+        else{
+         count_time = 0;
+         brightness_property2.style.backgroundColor = "#606060"
+        }
+
+
+    }
+        function bright_auto_CDS()
+    {
+
+        var brightness_property1 = document.getElementById("brightness_manual");
+        var brightness_property2 = document.getElementById("brightness_auto_time");
+        var brightness_property3 = document.getElementById("brightness_auto_CDS");
+        if (count_CDS == 0 ){
+         count_manual = 0;
+        count_time = 0;
+        count_CDS = 1;
+        brightness_property1.style.backgroundColor = "#606060"
+        brightness_property2.style.backgroundColor = "#606060"
+        brightness_property3.style.backgroundColor = "#202020"
+                        }
+        else{
+         count_CDS = 0;
+         brightness_property3.style.backgroundColor = "#606060"
+        }
+
+
+
+
+    }
 function check_Brightness_mode_manual() {
+if(count_manual == 1)
+{
+    return
+}
 var input = "0"
        $.ajax({
     url : '{% url 'check_Brightness_mode' %}',
@@ -289,7 +415,11 @@ var input = "0"
 
     }
 function check_Brightness_mode_auto_time() {
-var input = "2"
+if(count_time == 1)
+{
+    return
+}
+var input = "1"
        $.ajax({
     url : '{% url 'check_Brightness_mode' %}',
     type : 'POST',
@@ -303,7 +433,11 @@ var input = "2"
 
     }
 function check_Brightness_mode_auto_CDS() {
-var input = "1"
+if(count_CDS == 1)
+{
+    return
+}
+var input = "2"
        $.ajax({
     url : '{% url 'check_Brightness_mode' %}',
     type : 'POST',
@@ -574,7 +708,48 @@ function update_min_max() {
               <table style="width: 320px; margin-left: 14px;">
                 <tr>
 <script>
+var count_powermode_manual = 0;
+var count_powermode_auto = 0
+
+    function powermodemanual_button()
+    {
+        var powermode_property1 = document.getElementById("powermodemanual");
+        var powermode_property2 = document.getElementById("powermodeauto");
+        if (count_powermode_manual == 0 ){
+        count_powermode_manual = 1;
+        count_powermode_auto = 0;
+        powermode_property1.style.backgroundColor = "#202020"
+        powermode_property2.style.backgroundColor = "#606060"
+                        }
+        else{
+         count_powermode_manual = 0;
+         powermode_property1.style.backgroundColor = "#606060"
+        }
+
+    }
+
+    function powermodeauto_button()
+    {
+
+        var powermode_property1 = document.getElementById("powermodemanual");
+        var powermode_property2 = document.getElementById("powermodeauto");
+        if (count_powermode_auto == 0 ){
+        count_powermode_manual = 0;
+        count_powermode_auto = 1;
+        powermode_property1.style.backgroundColor = "#606060"
+        powermode_property2.style.backgroundColor = "#202020"
+                        }
+        else{
+         count_powermode_auto = 0;
+         powermode_property2.style.backgroundColor = "#606060"
+        }
+
+
+    }
 function power_mode_manual() {
+if(count_powermode_manual == 1){
+return
+}
 var input = "0"
        $.ajax({
     url : '{% url 'power_mode' %}',
@@ -588,6 +763,9 @@ var input = "0"
 });
     }
 function power_mode_auto() {
+if(count_powermode_auto == 1){
+return
+}
 var input = "1"
        $.ajax({
     url : '{% url 'power_mode' %}',
@@ -602,16 +780,57 @@ var input = "1"
     }
 </script>
                   <td style="border: none;">전원 모드</td>
-                  <td style="border: none;"><input type="button"  onclick="power_mode_manual()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';"  value="수동" class="VIDEO" /></td>
-                  <td style="border: none;"><input type="button"  onclick="power_mode_auto()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';"  value="자동" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button"  id = "powermodemanual" onclick="power_mode_manual(); powermodemanual_button();"  value="수동" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button"  id = "powermodeauto" onclick="power_mode_auto(); powermodeauto_button();"  value="자동" class="VIDEO" /></td>
 
                 </tr>
                 <tr>
 <script>
+
+var count_manual_control_on = 0;
+var count_manual_control_off = 0
+
+    function manualcontrolon_button()
+    {
+        var manualcontrol_property1 = document.getElementById("manualcontrolon");
+        var manualcontrol_property2 = document.getElementById("manualcontroloff");
+        if (count_manual_control_on == 0 ){
+        count_manual_control_on = 1;
+        count_manual_control_off = 0;
+        manualcontrol_property1.style.backgroundColor = "#202020"
+        manualcontrol_property2.style.backgroundColor = "#606060"
+                        }
+        else{
+         count_manual_control_on = 0;
+         manualcontrol_property1.style.backgroundColor = "#606060"
+        }
+
+    }
+
+    function manualcontroloff_button()
+    {
+
+        var manualcontrol_property1 = document.getElementById("manualcontrolon");
+        var manualcontrol_property2 = document.getElementById("manualcontroloff");
+        if (count_manual_control_off == 0 ){
+        count_manual_control_on = 0;
+        count_manual_control_off = 1;
+        manualcontrol_property1.style.backgroundColor = "#606060"
+        manualcontrol_property2.style.backgroundColor = "#202020"
+                        }
+        else{
+         count_manual_control_off = 0;
+         manualcontrol_property2.style.backgroundColor = "#606060"
+        }
+
+
+    }
 function manual_control_on() {
-var input = "1"
+if(count_manual_control_on == 1)
+{
+    return;
+}
+var input = "0"
        $.ajax({
     url : '{% url 'manual_control' %}',
     type : 'POST',
@@ -624,7 +843,11 @@ var input = "1"
 });
     }
 function manual_control_off() {
-var input = "0"
+if(count_manual_control_off == 1)
+{
+    return;
+}
+var input = "1"
        $.ajax({
     url : '{% url 'manual_control' %}',
     type : 'POST',
@@ -638,10 +861,8 @@ var input = "0"
     }
 </script>
                   <td style="border: none;"><p style="width: 100px;">수동 제어</p></td>
-                  <td style="border: none;"><input type="button"  onclick="manual_control_on()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';"  value="ON" class="VIDEO" /></td>
-                  <td style="border: none;"><input type="button"  onclick="manual_control_off()" onMouseover="this.style.background='#787878';"
-                                                   onMouseout="this.style.background='#636363';"  value="OFF" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button"  id = "manualcontrolon" onclick="manual_control_on(); manualcontrolon_button();" on  value="ON" class="VIDEO" /></td>
+                  <td style="border: none;"><input type="button"  id = "manualcontroloff"  onclick="manual_control_off(); manualcontroloff_button();" value="OFF" class="VIDEO" /></td>
                 </tr>
                 <tr style="height: 5px;">
                   <td style="border: none;"></td>
