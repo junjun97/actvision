@@ -111,6 +111,17 @@
             margin-top: 35px;
             border-radius: 5px;
         }
+        .dayofweek-btn{ /* 추가 버튼 */
+            background-color: #636363;
+            color: white;
+            width: 27px;
+            height: 27px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            border-radius: 5px;
+        }
 
         .add-btn:hover{
             background-color: #7a7a7a;
@@ -660,7 +671,7 @@
               <li class="user_inform">
                 <ul>
                   <li>ID    :{{userinfo}}</li>
-                  <li>Serial:</li>
+                  <li>Serial:{{user_id}}</li>
                 </ul>
               </li>
             </ul>
@@ -680,19 +691,26 @@ play_list_index = -1;
 video_index = -1;
 list_overlap = 0
 j=1;
-
+var last_video_index = -1;
+var move_movie_index = -1
+var whichcontentcheck_move;
 $(document).ready(function(){
 
     var list_context = JSON.parse("{{ context|escapejs }}");
     //alert(list_context['list_index']);
     list_overlap = list_context['list_overlap'];
     play_list_index = list_context['list_index'];
-
+    move_movie_index = list_context['list_videoindex'];
 
     whichvideocheck = 'flexCheckDefault' + play_list_index // 임창한 추가
     $("input:checkbox[id='" + whichvideocheck +"']").prop("checked", true); // 임창한 추가
 
+    move_movie_underindex = 20 + move_movie_index
+    whichcontentcheck_move = 'flexCheckDefault' + move_movie_underindex
 
+
+
+    last_video_index = list_context['list_media'].length
 
 
 
@@ -1150,7 +1168,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,0)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault20" name="video_check" onclick="checkOnlyOneUnder(this,0)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1164,7 +1182,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,1)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault21" name="video_check" onclick="checkOnlyOneUnder(this,1)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1174,7 +1192,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,2)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22" name="video_check" onclick="checkOnlyOneUnder(this,2)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1186,7 +1204,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,3)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault23" name="video_check" onclick="checkOnlyOneUnder(this,3)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1198,7 +1216,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,4)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault24" name="video_check" onclick="checkOnlyOneUnder(this,4)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1210,7 +1228,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,5)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault25" name="video_check" onclick="checkOnlyOneUnder(this,5)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1222,7 +1240,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,6)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault26" name="video_check" onclick="checkOnlyOneUnder(this,6)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1234,7 +1252,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,7)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault27" name="video_check" onclick="checkOnlyOneUnder(this,7)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1246,7 +1264,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,8)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault28" name="video_check" onclick="checkOnlyOneUnder(this,8)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1258,7 +1276,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,9)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault29" name="video_check" onclick="checkOnlyOneUnder(this,9)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1270,7 +1288,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,10)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault30" name="video_check" onclick="checkOnlyOneUnder(this,10)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1282,7 +1300,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,11)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault31" name="video_check" onclick="checkOnlyOneUnder(this,11)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1294,7 +1312,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,12)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault32" name="video_check" onclick="checkOnlyOneUnder(this,12)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1306,7 +1324,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,13)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault33" name="video_check" onclick="checkOnlyOneUnder(this,13)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1318,7 +1336,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,14)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault34" name="video_check" onclick="checkOnlyOneUnder(this,14)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1330,7 +1348,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,15)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault35" name="video_check" onclick="checkOnlyOneUnder(this,15)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1342,7 +1360,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,16)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault36" name="video_check" onclick="checkOnlyOneUnder(this,16)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1354,7 +1372,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,17)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault37" name="video_check" onclick="checkOnlyOneUnder(this,17)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1366,7 +1384,7 @@ function closePopup_list() {
                         <tr class="odd">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,18)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault38" name="video_check" onclick="checkOnlyOneUnder(this,18)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1378,7 +1396,7 @@ function closePopup_list() {
                         <tr class="even">
                             <td>
                                 <div class="form-check" >
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="video_check" onclick="checkOnlyOneUnder(this,19)">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault39" name="video_check" onclick="checkOnlyOneUnder(this,19)">
                                     <label class="form-check-label" for="flexCheckDefault"></label>
                                 </div>
                             </td>
@@ -1396,13 +1414,96 @@ function closePopup_list() {
                     <!--추가 팝업-->
             <div id="aside">
                 <div class="button">
-                    <img src="{% static 'redpointer.png'%}" id="redpointer">
+<script>
+function redbutton()
+{
+    if(last_video_index - 1 <= video_index )
+    {
+        alert("마지막 인덱스의 비디오입니다.")
+        return
+    }
+
+    var param = {'play_list_index' : play_list_index, 'video_index' : video_index,};
+    $.ajax({
+    url : '{% url 'downmove_movie' %}',
+    type : 'POST',
+    data : param,
+    success:function(data){
+     location.reload();
+
+    },
+    error: function(){
+
+        alert('error');}
+    });
+
+}
+
+
+setTimeout(function redbuttoncheck()
+{
+
+         if(last_video_index - 1 <= video_index )
+        {
+            return
+        }
+        else{
+            $("input:checkbox[id='" + whichcontentcheck_move +"']").prop("checked", true); // 임창한 추가
+            video_index = move_movie_index
+        }
+
+}, 50);
+
+function greenbutton()
+{
+    if(0 == video_index)
+    {
+        alert("첫번째 인덱스의 비디오입니다.")
+        return
+    }
+    if(last_video_index - 1 < video_index )
+    {
+         alert("올바르지 않은 인덱스입니다.")
+        return
+    }
+    var param = {'play_list_index' : play_list_index, 'video_index' : video_index,};
+    $.ajax({
+    url : '{% url 'upmove_movie' %}',
+    type : 'POST',
+    data : param,
+    success:function(data){
+     location.reload();
+    },
+    error: function(){
+        alert('error');}
+    });
+
+}
+setTimeout(function greenbuttoncheck()
+{
+
+          if(0 == video_index)
+        {
+            return
+        }
+            if(last_video_index - 1 < video_index )
+        {
+            return
+        }
+        else{
+            $("input:checkbox[id='" + whichcontentcheck_move +"']").prop("checked", true); // 임창한 추가
+            video_index = move_movie_index
+        }
+
+}, 50);
+</script>
+                    <img src="{% static 'redpointer.png'%}" id="redpointer" class = "img-btn" onclick = "redbutton(); redbuttoncheck();" >
                 </div>
             </div>
 
             <div id="aside">
                 <div class="button">
-                    <img src="{% static 'greenpointer.png'%}" id="greenpointer">
+                    <img src="{% static 'greenpointer.png'%}" class = "img-btn" onclick = "greenbutton()" id="greenpointer">
                 </div>
             </div>
 
@@ -1415,10 +1516,45 @@ function closePopup_list() {
                     </div>
                     <input type="file" id="chooseFile" name="chooseFile" accept=".mp4" onchange="loadFile(this)">
                     <script>
+                                        function LoadingWithMask() {
+
+                        var maskHeight = $(document).height();
+                        var maskWidth  = window.document.body.clientWidth;
+
+
+                        var mask       ="<div id='mask' style='position:absolute; z-index:9000; background-color:#B4B4BA; display:none; left:0; top:0;'></div>";
+                        var loadingImg ='';
+
+                        loadingImg +="<div id='loadingImg'>";
+                        loadingImg +=" <img src= /static/Spinner-0.7s-241px.gif style='position: relative; display: block; margin: 0px auto;'/>";
+                        loadingImg +="</div>";
+
+                        $('body')
+                            .append(mask)
+                            .append(loadingImg)
+
+
+                        $('#mask').css({
+                                'width' : maskWidth
+                                ,'height': maskHeight
+                                ,'opacity' :'0.3'
+                        });
+
+                        //마스크 표시
+                        $('#mask').show();
+
+                        //로딩중 이미지 표시
+                        $('#loadingImg').show();
+                    }
+
+
                         function loadFile(input) {
-
+                            LoadingWithMask()
                             var file = input.files[0];
-
+                            if(file.size > 100000000){
+                                alert("파일 용량 100MB이하 파일만 업로드 가능합니다.");
+                                return;
+                            }
                             var formData = new FormData();
                             formData.append("video", file);
                             formData.append("video_name", file.name);
@@ -1544,7 +1680,7 @@ function closePopup_list() {
                                         시작
                                     </td>
                                     <td>
-                                        <input type="date" id="start_day" value="2021-07-06" name="id" class="text-field" style="color: white; ">
+                                        <input type="date" id="start_day" name="start_day" class="text-field" style="color: white; ">
                                     </td>
                                 </tr>
                                 <tr>
@@ -1552,7 +1688,14 @@ function closePopup_list() {
                                         종료
                                     </td>
                                     <td>
-                                        <input type="date" id="finish_day" value="2021-07-06" name="id" class="text-field" style="color: white; ">
+                                        <input type="date" id="finish_day" name="finish_day" class="text-field" style="color: white; ">
+                                        <script>
+                                            let dateInput = document.getElementById('start_day');
+                                            dateInput.valueAsDate = new Date();
+
+                                            let dateInput1 = document.getElementById('finish_day');
+                                            dateInput1.valueAsDate = new Date();
+                                        </script>
                                     </td>
                                 </tr>
                             </table>
@@ -1567,7 +1710,7 @@ function closePopup_list() {
                                         :
                                     </td>
                                     <td>
-                                        <input type="text" id="start_min" class="right" value="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                 <input type="text" id="start_min" class="right" value="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                     </td>
                                     <td class="middle">
                                         ~
@@ -1584,14 +1727,133 @@ function closePopup_list() {
                                 </tr>
                             </table>
                             <table class="date-button">
+<script>
+var count_sun = 0;
+var count_mon = 0;
+var count_tues = 0;
+var count_wed = 0;
+var count_thurs = 0;
+var count_fri = 0;
+var count_sat = 0;
+
+
+var property_mon = document.getElementById("button_mon");
+var property_tues = document.getElementById("button_tues");
+var property_wed = document.getElementById("button_wed");
+var property_thurs = document.getElementById("button_thurs");
+var property_fri = document.getElementById("button_fri");
+var property_sat = document.getElementById("button_sat");
+
+    function sun()
+    {
+        var property_sun = document.getElementById("button_sun");
+        if (count_sun == 0){
+        count_sun = 1;
+        property_sun.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_sun = document.getElementById("button_sun");
+         count_sun = 0;
+         property_sun.style.backgroundColor = "#606060"
+        }
+
+    }
+    function mon()
+    {
+        var property_mon = document.getElementById("button_mon");
+        if (count_mon == 0){
+        count_mon = 1;
+        property_mon.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_mon = document.getElementById("button_mon");
+         count_mon = 0;
+         property_mon.style.backgroundColor = "#606060"
+        }
+
+    }
+    function tues()
+    {
+        var property_tues = document.getElementById("button_tues");
+        if (count_tues == 0){
+        count_tues = 1;
+        property_tues.style.backgroundColor = "#202020"
+                        }
+        else{
+     var property_tues = document.getElementById("button_tues");
+         count_tues = 0;
+         property_tues.style.backgroundColor = "#606060"
+        }
+
+    }
+    function wed()
+    {
+        var property_wed = document.getElementById("button_wed");
+        if (count_wed == 0){
+        count_wed = 1;
+        property_wed.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_wed = document.getElementById("button_wed");
+         count_wed = 0;
+         property_wed.style.backgroundColor = "#606060"
+        }
+
+    }
+    function thurs()
+    {
+        var property_thurs = document.getElementById("button_thurs");
+        if (count_thurs == 0){
+        count_thurs = 1;
+        property_thurs.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_thurs = document.getElementById("button_thurs");
+         count_thurs = 0;
+         property_thurs.style.backgroundColor = "#606060"
+        }
+
+    }
+    function fri()
+    {
+        var property_fri = document.getElementById("button_fri");
+        if (count_fri == 0){
+        count_fri = 1;
+        property_fri.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_fri = document.getElementById("button_fri");
+         count_fri = 0;
+         property_fri.style.backgroundColor = "#606060"
+        }
+
+    }
+    function sat()
+    {
+        var property_sat = document.getElementById("button_sat");
+        if (count_sat == 0){
+        count_sat = 1;
+        property_sat.style.backgroundColor = "#202020"
+                        }
+        else{
+          var property_sat = document.getElementById("button_sat");
+         count_sat = 0;
+         property_sat.style.backgroundColor = "#606060"
+        }
+
+    }
+
+
+
+</script>
                                 <tr>
-                                    <td><button >일</button></td>
-                                    <td><button >월</button></td>
-                                    <td><button >화</button></td>
-                                    <td><button >수</button></td>
-                                    <td><button >목</button></td>
-                                    <td><button >금</button></td>
-                                    <td><button >토</button></td>
+                                     <button type="button" id="button_sun"  class="dayofweek-btn" onclick="sun()" >일</button>
+                                     <button type="button" id="button_mon"  class="dayofweek-btn" onclick="mon()" >월</button>
+                                     <button type="button" id="button_tues"  class="dayofweek-btn" onclick="tues()" >화</button>
+                                     <button type="button" id="button_wed"  class="dayofweek-btn" onclick="wed()" >수</button>
+                                     <button type="button" id="button_thurs"  class="dayofweek-btn" onclick="thurs()" >목</button>
+                                     <button type="button" id="button_fri"  class="dayofweek-btn" onclick="fri()" >금</button>
+                                     <button type="button" id="button_sat"  class="dayofweek-btn" onclick="sat()" >토</button>
                                 </tr>
                             </table>
                         </div>
@@ -1617,13 +1879,16 @@ function closePopup_list() {
 
             var param = {'start_day': start_day, 'finish_day': finish_day, 'start_hour': start_hour,
             'start_min':start_min , 'finish_hour': finish_hour, 'finish_min': finish_min,
-            'video_index':video_index, 'play_list_index' : play_list_index,};
+            'video_index':video_index, 'play_list_index' : play_list_index, 'sun' : count_sun, 'mon' : count_mon ,
+            'tues' : count_tues, 'wed' : count_wed, 'thurs' : count_thurs, 'fri' : count_fri, 'sat' : count_sat };
+
 
             $.ajax({
             url : '{% url 'play_schedule' %}',
             type : 'POST',
             data : param,
             success:function(data){
+            location.reload()
  },
             error: function(){
             alert('error');}
