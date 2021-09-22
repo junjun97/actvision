@@ -31,7 +31,10 @@ auto_on_hour_check = -1
 auto_on_min_check = -1
 auto_off_hour_check = -1
 auto_off_min_check = -1
-first_loading = 1;
+first_loading = 1
+brightness_mode = -1
+powermode = -1
+manualcontrol = -1
 def settings(request):
 
     list_dict = {
@@ -122,6 +125,8 @@ def check_Brightness_mode_auto_time(request):
         change = value_of_request_body(request.body)
         print(request.body)
         print(str(change))
+        global brightness_mode
+        brightness_mode = str(change)
 
         recently_file_name = list_blobs(user_id)
         createDirectory(user_id)
